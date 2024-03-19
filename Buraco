@@ -1,0 +1,64 @@
+// Gabriel Afonso dos Santos - CB3026167
+
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
+#include <cstdlib>
+#include <ctime>
+
+using namespace std;
+
+// Estrutura para representar uma carta
+struct Carta {
+    int naipe;  // 1-Copas / 2-Paus / 3-Ouro / 4-Espada
+    int numero; // 1-Ás / 2-2 / 3-3  / 4-4  / 5-5  / 6-6  / 7-7  / 8-8  / 9-9  / 10-10  / 11-Valete  / 12-Dama / 13-Rei
+
+    Carta(int n, int num) : naipe(n), numero(num) {}
+
+    string toString() {
+        return to_string(naipe) + "-" + (numero < 10 ? "0" : "") + to_string(numero) + "-1";
+    }
+};
+
+vector<Carta> criarBaralho() {
+    vector<Carta> baralho;
+    for (int n = 1; n <= 4; ++n) {
+        for (int num = 1; num <= 13; ++num) {
+            baralho.push_back(Carta(n, num));
+        }
+    }
+    return baralho;
+}
+
+vector<vector<Carta>> distribuirCartas(vector<Carta>& baralho, int numJogadores) {
+ 
+    srand(time(0));
+    random_shuffle(baralho.begin(), baralho.end());
+
+    vector<vector<Carta>> maos(numJogadores);
+    for (int i = 0; i < numJogadores; ++i) {
+        for (int j = 0; j < 11; ++j) {
+            maos[i].push_back(baralho.back());
+            baralho.pop_back();
+        }
+    }
+    return maos;
+}
+
+int main() {
+    vector<Carta> baralho = criarBaralho();
+    baralho.insert(baralho.end(), baralho.begin(), baralho.end());
+
+    vector<vector<Carta>> maos = distribuirCartas(baralho, 4);
+
+    for (int i = 0; i < 4; ++i) {
+        cout << "Mão do jogador " << i+1 << ":" << endl;
+        for (int j = 0; j < 11; ++j) {
+            cout << maos[i][j].toString() << endl;
+        }
+        cout << endl;
+    }
+
+    return 0;
+}
