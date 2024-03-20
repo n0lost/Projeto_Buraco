@@ -9,7 +9,7 @@
 
 using namespace std;
 
-// Estrutura para representar uma carta
+// Representação das cartas
 struct Carta {
     int naipe;  // 1-Copas / 2-Paus / 3-Ouro / 4-Espada
     int numero; // 1-Ás / 2-2 / 3-3  / 4-4  / 5-5  / 6-6  / 7-7  / 8-8  / 9-9  / 10-10  / 11-Valete  / 12-Dama / 13-Rei
